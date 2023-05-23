@@ -1,11 +1,16 @@
 {
-  "app_id": 9000,
-  "title": "My Awesome E-Com Plus App",
-  "slug": "my-awesome-ecom-plus-app",
+  "app_id": 104136,
+  "title": "Flash Courier",
+  "slug": "flash-courier",
   "type": "external",
   "state": "active",
   "authentication": true,
-  "modules": {},
+  "modules": {
+    "calculate_shipping": {
+      "enabled": true,
+      "endpoint": "https://us-central1-ecom-flashcourier.cloudfunctions.net/app/ecom/modules/calculate-shipping"
+    }
+  },
   "auth_scope": {
     "stores/me": [
       "GET"
@@ -17,15 +22,120 @@
     "brands": [],
     "categories": [],
     "customers": [],
-    "orders": [],
+    "orders": [
+      "GET"
+    ],
     "carts": [],
-    "orders/fulfillments": [],
+    "orders/fulfillments": [
+      "POST"
+    ],
+    "orders/shipping_lines": [
+      "GET",
+      "PATCH"
+    ],
     "orders/payments_history": [],
     "products/quantity": [],
     "products/variations/quantity": [],
     "products/price": [],
     "products/variations/price": []
   },
-  "auth_callback_uri": "https://us-central1-ecom-app-boilerplate.cloudfunctions.net/app/ecom/auth-callback",
+  "admin_settings": {
+    "zip": {
+      "schema": {
+        "type": "string",
+        "maxLength": 9,
+        "pattern": "^[0-9]{5}-?[0-9]{3}$",
+        "title": "CEP de origem",
+        "description": "Código postal do remetente para cálculo do frete"
+      },
+      "hide": true
+    },
+    "flashcourier_contract": {
+      "schema": {
+        "title": "Credenciais Flash Courier",
+        "description": "Informações do contrato fornecidas pela Flash Courier",
+        "type": "object",
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "maxLength": 255,
+            "title": "Chave para cálculo de frete"
+          },
+          "client_id": {
+            "type": "string",
+            "maxLength": 255,
+            "title": "ID do cliente (cliente_id)"
+          },
+          "cct_id": {
+            "type": "string",
+            "maxLength": 255,
+            "title": "CCT ID (ctt_id)"
+          },
+          "login": {
+            "type": "string",
+            "maxLength": 255,
+            "title": "Login (tracking)"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 255,
+            "title": "Senha (tracking)"
+          },
+          "hmac": {
+            "type": "string",
+            "maxLength": 255,
+            "title": "HMAC (tracking)"
+          }
+        }
+      },
+      "hide": true
+    },
+    "posting_deadline": {
+      "schema": {
+        "title": "Prazo de postagem",
+        "type": "object",
+        "required": [
+          "days"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "days": {
+            "type": "integer",
+            "default": 3,
+            "minimum": 0,
+            "maximum": 999999,
+            "title": "Número de dias",
+            "description": "Dias de prazo para postar os produtos após a compra"
+          },
+          "working_days": {
+            "type": "boolean",
+            "default": true,
+            "title": "Dias úteis"
+          },
+          "after_approval": {
+            "type": "boolean",
+            "default": true,
+            "title": "Após aprovação do pagamento"
+          }
+        }
+      },
+      "hide": false
+    },
+    "additional_price": {
+      "schema": {
+        "type": "number",
+        "minimum": -999999,
+        "maximum": 999999,
+        "title": "Custo adicional",
+        "description": "Valor a adicionar (negativo para descontar) no frete calculado"
+      },
+      "hide": false
+    }
+  },
+  "auth_callback_uri": "https://us-central1-ecom-flashcourier.cloudfunctions.net/app/ecom/auth-callback",
   "version": "1.0.0"
 }
