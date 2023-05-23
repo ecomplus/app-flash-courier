@@ -7,8 +7,8 @@
 
 const app = {
   app_id: 104136,
-  title: 'My Awesome E-Com Plus App',
-  slug: 'my-awesome-app',
+  title: 'Flash Courier',
+  slug: 'flash-courier',
   type: 'external',
   state: 'active',
   authentication: true,
@@ -22,7 +22,7 @@ const app = {
      * Triggered to calculate shipping options, must return values and deadlines.
      * Start editing `routes/ecom/modules/calculate-shipping.js`
      */
-    // calculate_shipping:   { enabled: true },
+    calculate_shipping:   { enabled: true },
 
     /**
      * Triggered to validate and apply discount value, must return discount and conditions.
@@ -82,7 +82,7 @@ const app = {
       // 'DELETE',        // Delete customers
     ],
     orders: [
-      // 'GET',           // List/read orders with public and private fields
+      'GET',           // List/read orders with public and private fields
       // 'POST',          // Create orders
       // 'PATCH',         // Edit orders
       // 'PUT',           // Overwrite orders
@@ -101,8 +101,12 @@ const app = {
      */
     'orders/fulfillments': [
       // 'GET',           // List/read order fulfillment and tracking events
-      // 'POST',          // Create fulfillment event with new status
+      'POST',             // Create fulfillment event with new status
       // 'DELETE',        // Delete fulfillment event
+    ],
+    'orders/shipping_lines': [
+      'GET',              // List/read order shipping lines
+      'PATCH',            // Edit order shipping line nested object
     ],
     'orders/payments_history': [
       // 'GET',           // List/read order payments history events
@@ -138,37 +142,97 @@ const app = {
   },
 
   admin_settings: {
-    /**
-     * JSON schema based fields to be configured by merchant and saved to app `data` / `hidden_data`, such as:
-
-     webhook_uri: {
-       schema: {
-         type: 'string',
-         maxLength: 255,
-         format: 'uri',
-         title: 'Notifications URI',
-         description: 'Unique notifications URI available on your Custom App dashboard'
-       },
-       hide: true
-     },
-     token: {
-       schema: {
-         type: 'string',
-         maxLength: 50,
-         title: 'App token'
-       },
-       hide: true
-     },
-     opt_in: {
-       schema: {
-         type: 'boolean',
-         default: false,
-         title: 'Some config option'
-       },
-       hide: false
-     },
-
-     */
+    zip: {
+      schema: {
+        type: 'string',
+        maxLength: 9,
+        pattern: '^[0-9]{5}-?[0-9]{3}$',
+        title: 'CEP de origem',
+        description: 'Código postal do remetente para cálculo do frete'
+      },
+      hide: true
+    },
+    flashcourier_contract: {
+      schema: {
+        title: 'Credenciais Flash Courier',
+        description: 'Informações do contrato fornecidas pela Flash Courier',
+        type: 'object',
+        required: ['key'],
+        additionalProperties: false,
+        properties: {
+          key: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Chave para cálculo de frete'
+          },
+          client_id: {
+            type: 'string',
+            maxLength: 255,
+            title: 'ID do cliente (cliente_id)'
+          },
+          cct_id: {
+            type: 'string',
+            maxLength: 255,
+            title: 'CCT ID (ctt_id)'
+          },
+          login: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Login (tracking)'
+          },
+          password: {
+            type: 'string',
+            maxLength: 255,
+            title: 'Senha (tracking)'
+          },
+          hmac: {
+            type: 'string',
+            maxLength: 255,
+            title: 'HMAC (tracking)'
+          }
+        }
+      },
+      hide: true
+    },
+    posting_deadline: {
+      schema: {
+        title: 'Prazo de postagem',
+        type: 'object',
+        required: ['days'],
+        additionalProperties: false,
+        properties: {
+          days: {
+            type: 'integer',
+            default: 3,
+            minimum: 0,
+            maximum: 999999,
+            title: 'Número de dias',
+            description: 'Dias de prazo para postar os produtos após a compra'
+          },
+          working_days: {
+            type: 'boolean',
+            default: true,
+            title: 'Dias úteis'
+          },
+          after_approval: {
+            type: 'boolean',
+            default: true,
+            title: 'Após aprovação do pagamento'
+          }
+        }
+      },
+      hide: false
+    },
+    additional_price: {
+      schema: {
+        type: 'number',
+        minimum: -999999,
+        maximum: 999999,
+        title: 'Custo adicional',
+        description: 'Valor a adicionar (negativo para descontar) no frete calculado'
+      },
+      hide: false
+    }
   }
 }
 

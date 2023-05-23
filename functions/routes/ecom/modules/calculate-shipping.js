@@ -1,16 +1,4 @@
 exports.post = ({ appSdk }, req, res) => {
-  /**
-   * Treat `params` and (optionally) `application` from request body to properly mount the `response`.
-   * JSON Schema reference for Calculate Shipping module objects:
-   * `params`: https://apx-mods.e-com.plus/api/v1/calculate_shipping/schema.json?store_id=100
-   * `response`: https://apx-mods.e-com.plus/api/v1/calculate_shipping/response_schema.json?store_id=100
-   *
-   * Examples in published apps:
-   * https://github.com/ecomplus/app-mandabem/blob/master/functions/routes/ecom/modules/calculate-shipping.js
-   * https://github.com/ecomplus/app-datafrete/blob/master/functions/routes/ecom/modules/calculate-shipping.js
-   * https://github.com/ecomplus/app-jadlog/blob/master/functions/routes/ecom/modules/calculate-shipping.js
-   */
-
   const { params, application } = req.body
   const { storeId } = req
   // setup basic required response object
