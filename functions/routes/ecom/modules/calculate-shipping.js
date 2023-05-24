@@ -157,7 +157,9 @@ exports.post = async ({ appSdk }, req, res) => {
         let price, days
         if (typeof flashcourierProduto[label] === 'object') {
           price = parseFloat(flashcourierProduto[label].preco)
-          days = parseInt(flashcourierProduto[label].prazo_max, 10)
+          const minDays = parseInt(flashcourierProduto[label].prazo_min, 10)
+          const maxDays = parseInt(flashcourierProduto[label].prazo_max, 10)
+          days = Math.ceil((minDays + maxDays) / 2)
         } else {
           price = parseFloat(flashcourierProduto[label])
         }
