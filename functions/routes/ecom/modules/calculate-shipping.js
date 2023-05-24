@@ -133,7 +133,7 @@ exports.post = async ({ appSdk }, req, res) => {
       `&cliente_chave=${flashcourierKey}`
     let flashcourierResult
     try {
-      flashcourierResult = await axios(flashcourierUrl)
+      flashcourierResult = (await axios(flashcourierUrl)).data
     } catch (err) {
       let { message } = err
       if (err.response && err.response.data && err.response.data.message) {
