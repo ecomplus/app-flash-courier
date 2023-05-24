@@ -146,5 +146,6 @@ console.log(`-- Sheduled update E-Com Plus tokens '${cron}'`)
 
 const updateTracking = require('./lib/integration/update-tracking')
 const trackingCron = '19 * * * *'
-exports.scheduledSync = functions.pubsub.schedule(trackingCron).onRun(updateTracking)
+exports.scheduledSync = functions.runWith({ timeoutSeconds: 360 })
+  .pubsub.schedule(trackingCron).onRun(updateTracking)
 console.log(`-- Sheduled active tracking from Flash Courier API '${trackingCron}'`)
