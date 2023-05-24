@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/ecomplus/application-starter/compare/v1.1.0...v1.1.1) (2023-05-24)
+
+
+### Bug Fixes
+
+* fix flash courier ws endpoint (/v2/) ([8ed8967](https://github.com/ecomplus/application-starter/commit/8ed8967c0ee6d4c88e1b95c2c39ebbe4899c8d58))
+* fix flash courier ws endpoint (/v2/) ([17b3b73](https://github.com/ecomplus/application-starter/commit/17b3b739059a54da2501e59bba7bc007283a5f13))
+* prevent negative total priceon calculate with configured discount ([2c704af](https://github.com/ecomplus/application-starter/commit/2c704aff6a0d531b266fd8a1228a671733d846a8))
+* suming configured additional price if any ([4c0fec9](https://github.com/ecomplus/application-starter/commit/4c0fec92fc3cc727e8aad1d2db29430a273fed4f))
+* update calculate to handle object (price and deadline) ws results ([7f497d9](https://github.com/ecomplus/application-starter/commit/7f497d90c27cda16362fb813d0a7711f475841e1))
+
 ## [1.1.0](https://github.com/ecomplus/application-starter/compare/v1.0.0...v1.1.0) (2023-05-24)
 
 
