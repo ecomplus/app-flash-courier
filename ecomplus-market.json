@@ -1,7 +1,7 @@
 {
   "app": {
-    "title": "",
-    "short_description": "",
-    "category": "tools"
+    "title": "Flash Courier",
+    "short_description": "Cálculo de frete e rastreamento via Flash Courier",
+    "category": "shipping"
   }
 }

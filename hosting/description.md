@@ -1,3 +1,7 @@
-# My Awesome E-Com Plus App
+# Flash Courier
 
-Somethings about my app and what it does...
+Cálculo de frete, prazo de envio e rastreamento de entregas via [Flash Courier](https://www.flashcourier.com.br/).
+
+Permite configuração de valor adicional e prazo extra (postagem).
+
+**É necessário possuir contrato diretamente com a Flash Courier** e solicitar as credenciais da conta.
