@@ -199,6 +199,9 @@ exports.post = async ({ appSdk }, req, res) => {
             shippingLine.discount -= appData.additional_price
           }
           shippingLine.total_price += appData.additional_price
+          if (shippingLine.total_price < 0) {
+            shippingLine.total_price = 0
+          }
         }
         response.shipping_services.push({
           label,
