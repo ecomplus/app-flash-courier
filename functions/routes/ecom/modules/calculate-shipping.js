@@ -139,6 +139,7 @@ exports.post = async ({ appSdk }, req, res) => {
       if (err.response && err.response.data && err.response.data.message) {
         message = err.response.data.message
       }
+      console.warn(`[calc] failed ${flashcourierUrl}`)
       return res.status(409).send({
         error: 'CALCULATE_FAILED_WS',
         message
@@ -153,7 +154,13 @@ exports.post = async ({ appSdk }, req, res) => {
 
     flashcourierResult.products.forEach((flashcourierProduto) => {
       Object.keys(flashcourierProduto).forEach(label => {
-        const price = parseFloat(flashcourierProduto[label])
+        let price, days
+        if (typeof flashcourierProduto[label] === 'object') {
+          price = parseFloat(flashcourierProduto[label].preco)
+          days = parseInt(flashcourierProduto[label].prazo_max, 10)
+        } else {
+          price = parseFloat(flashcourierProduto[label])
+        }
         const shippingLine = {
           from: {
             ...params.from,
@@ -164,11 +171,11 @@ exports.post = async ({ appSdk }, req, res) => {
           total_price: price,
           discount: 0,
           delivery_time: {
-            days: getDeadline(originZip, destinationZip),
+            days,
             working_days: true
           },
           posting_deadline: {
-            days: 3,
+            days: 1,
             ...appData.posting_deadline
           },
           package: {
@@ -198,22 +205,22 @@ exports.post = async ({ appSdk }, req, res) => {
       })
     })
 
-    if (response.shipping_services.length > 1) {
-      response.shipping_services.sort((a, b) => {
-        if (a.price > b.price) {
-          return 1
-        }
-        return -1
-      })
-      response.shipping_services.forEach((service, i) => {
-        if (i === 0) {
-          // express deadline on first (cheaper) service
-          service.shipping_line.delivery_time.days = getDeadline(originZip, destinationZip, true)
-        } else if (i > 1) {
+    response.shipping_services.sort((a, b) => {
+      if (a.price > b.price) {
+        return 1
+      }
+      return -1
+    })
+    response.shipping_services.forEach((service, i) => {
+      if (!service.shipping_line.delivery_time.days) {
+        // express deadline on first (cheaper) service
+        const isExpress = response.shipping_services.length > 1 && i === 0
+        service.shipping_line.delivery_time.days = getDeadline(originZip, destinationZip, isExpress)
+        if (i > 1) {
           service.shipping_line.delivery_time.days += (i - 1)
         }
-      })
-    }
+      }
+    })
   } else {
     res.status(400).send({
       error: 'CALCULATE_EMPTY_CART',
