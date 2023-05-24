@@ -127,9 +127,9 @@ exports.post = async ({ appSdk }, req, res) => {
     })
 
     // https://www.flashcalculador-sp.com.br/documentacao-api
-    const flashcourierUrl = 'https://www.flashcalculador-sp.com.br/api/v1/calcular_frete' +
+    const flashcourierUrl = 'https://www.flashcalculador-sp.com.br/api/v2/calcular_frete' +
       `?cep_destino=${destinationZip}` +
-      `&peso_gramas=${(finalWeight ? finalWeight * 1000 : 500)}` +
+      `&peso_gramas=${(finalWeight ? finalWeight * 1000 : 100)}` +
       `&cliente_chave=${flashcourierKey}`
     let flashcourierResult
     try {
@@ -139,7 +139,7 @@ exports.post = async ({ appSdk }, req, res) => {
       if (err.response && err.response.data && err.response.data.message) {
         message = err.response.data.message
       }
-      console.warn(`[calc] failed ${flashcourierUrl}`)
+      // console.warn(`[calc] failed ${flashcourierUrl}`)
       return res.status(409).send({
         error: 'CALCULATE_FAILED_WS',
         message
