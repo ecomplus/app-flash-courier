@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/ecomplus/application-starter/compare/v1.0.0...v1.1.0) (2023-05-24)
+
+
+### Features
+
+* setup tracking by flags and order numbers ([15c5686](https://github.com/ecomplus/application-starter/commit/15c5686b06a828d08ff922ccb070922a9f1a1c68))
+
 ## 1.0.0 (2023-05-24)
 
 
