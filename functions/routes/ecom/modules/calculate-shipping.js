@@ -179,12 +179,25 @@ exports.post = async ({ appSdk }, req, res) => {
           },
           flags: ['flashcr-ws']
         }
+        if (appData.additional_price) {
+          if (appData.additional_price > 0) {
+            shippingLine.other_additionals = [{
+              tag: 'additional_price',
+              label: 'Adicional padrão',
+              price: appData.additional_price
+            }]
+          } else {
+            shippingLine.discount -= appData.additional_price
+          }
+          shippingLine.total_price += appData.additional_price
+        }
         response.shipping_services.push({
           label,
           shipping_line: shippingLine
         })
       })
     })
+
     if (response.shipping_services.length > 1) {
       response.shipping_services.sort((a, b) => {
         if (a.price > b.price) {
