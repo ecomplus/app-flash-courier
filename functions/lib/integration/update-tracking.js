@@ -56,9 +56,10 @@ const fetchTracking = ({ appSdk, storeId }) => {
               logger.error(err)
             }
             if (!flashcourierToken) return
+            logger.info(`[track] #${storeId} ${flashcourierToken}`)
             let orders
             const ordersEndpoint = '/orders.json?fields=_id,number,fulfillment_status' +
-              '&flags=flashcr-ws' +
+              '&shipping_lines.flags=flashcr-ws' +
               '&fulfillment_status.current!=delivered' +
               `&created_at>=${new Date(Date.now() - 1000 * 60 * 60 * 24 * 60).toISOString()}`
             try {
@@ -68,6 +69,7 @@ const fetchTracking = ({ appSdk, storeId }) => {
               logger.error(err)
             }
             if (!orders.length) return
+            logger.info(`[track] #${storeId} ${orders.map(({ _id }) => _id).join(' ')}`)
             try {
               const { data: { hawbs } } = await axios({
                 method: 'post',
@@ -90,7 +92,7 @@ const fetchTracking = ({ appSdk, storeId }) => {
                   return Number(hawb.meuNumero.replace(/\D/g, '')) === number
                 })
                 if (!order) {
-                  logger.warn(`[tracking] cannot match order for ${JSON.stringify(hawb)}`)
+                  logger.warn(`[track] cannot match order for ${JSON.stringify(hawb)}`)
                 } else {
                   hawb.historico.sort((a, b) => {
                     if (a.ocorrencia && b.ocorrencia) {
