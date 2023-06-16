@@ -163,6 +163,14 @@ exports.post = async ({ appSdk }, req, res) => {
         } else {
           price = parseFloat(flashcourierProduto[label])
         }
+        if (Array.isArray(appData.services) && appData.services.length) {
+          const service = appData.services.find((service) => label === service.service_code)
+          if (service) {
+            label = service.label || label
+          } else {
+            return
+          }
+        }
         const shippingLine = {
           from: {
             ...params.from,

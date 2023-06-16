@@ -194,6 +194,34 @@ const app = {
       },
       hide: true
     },
+    services: {
+      schema: {
+        title: 'Serviços de entrega via Flash Courier',
+        type: 'array',
+        maxItems: 6,
+        items: {
+          title: 'Opção de serviço de entrega',
+          type: 'object',
+          required: [
+            'service_code'
+          ],
+          properties: {
+            label: {
+              type: 'string',
+              maxLength: 50,
+              title: 'Rótulo',
+              description: 'Nome do serviço exibido aos clientes'
+            },
+            service_code: {
+              type: 'string',
+              maxLength: 50,
+              title: 'Código do serviço'
+            }
+          }
+        }
+      },
+      hide: true
+    },
     posting_deadline: {
       schema: {
         title: 'Prazo de postagem',
