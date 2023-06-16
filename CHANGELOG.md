@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/ecomplus/application-starter/compare/v1.1.1...v1.2.0) (2023-06-16)
+
+
+### Features
+
+* add config to select services and custom labels ([b1ea05a](https://github.com/ecomplus/application-starter/commit/b1ea05a64e015940ee0b8564757782d857f6c55b))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @google-cloud/firestore to ^6.6.1 ([cd8a62f](https://github.com/ecomplus/application-starter/commit/cd8a62f2eb3fbd5ed3e0e6fb6ee3e345dcf68d6b))
+* update listing orders with fashcourier flag for tracking ([5c83a1d](https://github.com/ecomplus/application-starter/commit/5c83a1d0462cb53d1849b9ea27aca5311d53a38e))
+* update tracking status parses ([16da7ca](https://github.com/ecomplus/application-starter/commit/16da7cac9185ddc2861dd881502cd1bdca660490))
+
 ### [1.1.1](https://github.com/ecomplus/application-starter/compare/v1.1.0...v1.1.1) (2023-05-24)
 
 
