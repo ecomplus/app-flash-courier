@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/ecomplus/application-starter/compare/v1.2.0...v1.3.0) (2023-06-21)
+
+
+### Features
+
+* saving tracking code and link to order shipping line ([0f8d0bf](https://github.com/ecomplus/application-starter/commit/0f8d0bf8274453c969a9cd2a4f64e428276e8523))
+
+
+### Bug Fixes
+
+* match tracking order checking `hawb.codigoCartao` ([63c2bfe](https://github.com/ecomplus/application-starter/commit/63c2bfedd8ba1071eb85a1439ed650564f5971cf))
+* properly checking each "hawb" on update tracking ([f249003](https://github.com/ecomplus/application-starter/commit/f24900312bfb602b28c9e6756896da5266170532))
+
 ## [1.2.0](https://github.com/ecomplus/application-starter/compare/v1.1.1...v1.2.0) (2023-06-16)
 
 
