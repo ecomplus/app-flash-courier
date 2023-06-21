@@ -112,13 +112,20 @@ const fetchTracking = ({ appSdk, storeId }) => {
                       status = 'ready_for_shipping'
                       break
                     case '1400':
+                    case '2000':
+                    case '2200':
+                    case '3000':
+                    case '4100':
                       status = 'shipped'
                       break
+                    case '2500':
                     case '4250':
                     case '4300':
                     case '5000':
                       status = 'delivered'
                       break
+                    case '2400':
+                    case '2600':
                     case '6100':
                       status = 'returned'
                       break
@@ -131,6 +138,15 @@ const fetchTracking = ({ appSdk, storeId }) => {
                       status,
                       flags: ['flashcr']
                     })
+                    if (status === 'shipped') {
+                      const code = storeId === 51301 ? `MONO-${number}` : String(number)
+                      await appSdk.apiRequest(storeId, `/orders/${order._id}/shipping_lines/0.json`, 'PATCH', {
+                        tracking_codes: [{
+                          code,
+                          link: `https://www.flashcourier.com.br/rastreio/${code}`
+                        }]
+                      })
+                    }
                   }
                 }
               }
