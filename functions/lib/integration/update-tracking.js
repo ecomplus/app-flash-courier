@@ -86,11 +86,13 @@ const fetchTracking = ({ appSdk, storeId }) => {
                   })
                 }
               })
+              logger.info({ hawbs })
               for (let i = 0; i.length < hawbs.length; i++) {
                 const hawb = hawbs[i]
                 const order = orders.find(({ number }) => {
                   return Number(hawb.meuNumero.replace(/\D/g, '')) === number
                 })
+                logger.info({ hawb, order })
                 if (!order) {
                   logger.warn(`[track] cannot match order for ${JSON.stringify(hawb)}`)
                 } else {
