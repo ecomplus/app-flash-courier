@@ -86,13 +86,13 @@ const fetchTracking = ({ appSdk, storeId }) => {
                   })
                 }
               })
-              logger.info({ hawbs })
+              // logger.info({ hawbs })
               for (let i = 0; i.length < hawbs.length; i++) {
                 const hawb = hawbs[i]
                 const order = orders.find(({ number }) => {
-                  return Number(hawb.meuNumero.replace(/\D/g, '')) === number
+                  return Number(hawb.codigoCartao.replace(/\D/g, '')) === number
                 })
-                logger.info({ hawb, order })
+                // logger.info({ hawb, order })
                 if (!order) {
                   logger.warn(`[track] cannot match order for ${JSON.stringify(hawb)}`)
                 } else {
@@ -141,7 +141,7 @@ const fetchTracking = ({ appSdk, storeId }) => {
                       flags: ['flashcr']
                     })
                     if (status === 'shipped') {
-                      const code = storeId === 51301 ? `MONO-${number}` : String(number)
+                      const code = hawb.codigoCartao
                       await appSdk.apiRequest(storeId, `/orders/${order._id}/shipping_lines/0.json`, 'PATCH', {
                         tracking_codes: [{
                           code,
