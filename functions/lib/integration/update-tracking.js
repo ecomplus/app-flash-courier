@@ -86,13 +86,13 @@ const fetchTracking = ({ appSdk, storeId }) => {
                   })
                 }
               })
-              logger.info({ hawbs })
-              for (let i = 0; i.length < hawbs.length; i++) {
+              // logger.info({ hawbs })
+              for (let i = 0; i < hawbs.length; i++) {
                 const hawb = hawbs[i]
                 const order = orders.find(({ number }) => {
                   return Number(hawb.codigoCartao.replace(/\D/g, '')) === number
                 })
-                logger.info({ hawb, order })
+                // logger.info({ hawb, order })
                 if (!order) {
                   logger.warn(`[track] cannot match order for ${JSON.stringify(hawb)}`)
                 } else {
@@ -108,7 +108,7 @@ const fetchTracking = ({ appSdk, storeId }) => {
                     return 0
                   })
                   const { eventoId } = hawb.historico[hawb.historico.length - 1]
-                  logger.info({ eventoId })
+                  // logger.info({ eventoId })
                   let status
                   switch (eventoId) {
                     case '1100':
