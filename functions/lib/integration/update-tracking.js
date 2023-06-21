@@ -69,7 +69,7 @@ const fetchTracking = ({ appSdk, storeId }) => {
               logger.error(err)
             }
             if (!orders.length) return
-            logger.info(`[track] #${storeId} ${orders.map(({ _id }) => _id).join(' ')}`)
+            logger.info(`[track] #${storeId} ${orders.map(({ number }) => number).join(' ')}`)
             try {
               const { data: { hawbs } } = await axios({
                 method: 'post',
