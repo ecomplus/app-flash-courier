@@ -71,7 +71,7 @@ const fetchTracking = ({ appSdk, storeId }) => {
             if (!orders.length) return
             logger.info(`[track] #${storeId} ${orders.map(({ number }) => number).join(' ')}`)
             try {
-              const { data: { hawbs } } = await axios({
+              const { data } = await axios({
                 method: 'post',
                 url: 'https://webservice.flashpegasus.com.br/FlashPegasus/rest/padrao/v2/consulta',
                 headers: {
@@ -86,6 +86,11 @@ const fetchTracking = ({ appSdk, storeId }) => {
                   })
                 }
               })
+              const { hawbs } = data
+              if (!Array.isArray(hawbs)) {
+                logger.warn({ data })
+                return
+              }
               // logger.info({ hawbs })
               for (let i = 0; i < hawbs.length; i++) {
                 const hawb = hawbs[i]
