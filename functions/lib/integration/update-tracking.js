@@ -81,7 +81,7 @@ const fetchTracking = ({ appSdk, storeId }) => {
                   clienteId: Number(clientId),
                   cttId: cctIds.split(',').map((id) => Number(id.trim())),
                   numEncCli: orders.map(({ number }) => {
-                    if (storeId === 51301) return `MONO-${number}`
+                    if (storeId === 51301) return `MONO${number}`
                     return String(number)
                   })
                 }
